@@ -1,0 +1,127 @@
+<html><head>
+
+<!-- Latest compiled and minified CSS -->
+
+<link rel="stylesheet" href="stylesheets/bootstrap.css">
+<link rel="stylesheet" href="stylesheets/bootstrap-responsive.css">
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script type="text/javascript" src="javascripts/raphael-2.0.1.min.js"></script>
+<script type="text/javascript" src="javascripts/json2.min.js"></script>
+<script type="text/javascript" src="src/raphael.sketchpad.js"></script>
+
+<!-- <link rel="stylesheet" href="main.css"> -->
+
+
+</head>
+<body>
+
+
+
+<div class="container">
+
+<div class="row"></div>
+
+
+<div class="row">
+<div class="clear widget_actions span-2" style="-webkit-user-select: text;">
+      <button id="editor_Prev" class="btn btn-warning" style="-webkit-user-select: text;">Prev</button>
+      <button id="editor_Next" class="btn btn-warning" style="-webkit-user-select: text;">Next</button>
+    </div>
+</div>
+
+
+<div class="row">
+  
+
+  <div class="span6">
+
+<div id="editor1" style="background-image: url(1.tif); width: 580;" ></div>
+
+<div class="clear widget_actions span-2" style="-webkit-user-select: text;">
+      <button id="editor_white" class="btn btn-default" style="-webkit-user-select: text;">SCM</button>
+      <button id="editor_red" class="btn btn-danger" style="-webkit-user-select: text;">ASM</button>
+      <button id="editor_green" class="btn btn-success" style="-webkit-user-select: text;">MSM</button>
+      <button id="editor_blue" class="btn btn-primary" style="-webkit-user-select: text;">BP</button>
+      <button id="editor_yellow" class="btn" style="-webkit-user-select: text;"> -- </button>
+      <button id="editor_clear" class="btn btn-warning" style="-webkit-user-select: text;">Clear</button>
+      <button id="editor_undo" class="btn btn-warning" style="-webkit-user-select: text;">Undo</button>
+    </div>
+
+<form action="" method="get">
+  <input type="hidden" name="data" />
+  <input type="submit" value="Save" />
+</form>
+
+ </div>
+
+
+<div class="span6">
+<div id="viewer1" style="background-color: black; border-color: #000000; border-style: solid; width: 585;" ></div>
+
+<script type="text/javascript">
+  var sketchpad = Raphael.sketchpad("editor1", {
+    width: 580,
+    height: 420,
+    editing: true
+  });
+
+  var sketchpad_viewer = Raphael.sketchpad("viewer1", {
+          width: 580,
+          height: 420,
+          editing: false
+        });
+
+  //sketchpad.pen.color("#FFFFFF");
+  sketchpad.pen().width(2);
+  sketchpad.pen().color("#FFF");
+
+  sketchpad_viewer.canvas().style.backgroundColor = '#000000';
+
+  // When the sketchpad changes, update the input field.
+  sketchpad.change(function() {
+    $("#data").val(sketchpad.json());
+    sketchpad_viewer.json(sketchpad.json_viewer());
+  });
+
+
+    $("#editor_white").click(function() {
+      sketchpad.pen().color("#FFF");
+    });
+    $("#editor_red").click(function() {
+      sketchpad.pen().color("#f00");
+    });
+    $("#editor_green").click(function() {
+      sketchpad.pen().color("#0f0");
+    });
+    $("#editor_blue").click(function() {
+      sketchpad.pen().color("#00f");
+    });
+    $("#editor_yellow").click(function() {
+      sketchpad.pen().color("#FFFF00");
+    });
+
+    $("#editor_undo").click(function() {
+      sketchpad.undo();
+    });
+
+    $("#editor_clear").click(function() {
+      sketchpad.clear();
+      sketchpad_viewer.json(sketchpad.json_viewer());
+    });
+
+
+    // Change the widht and the height attributes manually through DOM
+$('#viewer1').attr('width', 300);
+
+
+</script>
+
+</div>
+
+
+
+</div>
+</div>
+</body>
+</html>
